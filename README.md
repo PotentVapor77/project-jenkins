@@ -7,7 +7,6 @@ Proyecto de Gestion
 
 # Datos cambiados / Navarrete
 
-
 # Datos cambiado / Sánchez
 
 # Datos cambiado / Mariscal
