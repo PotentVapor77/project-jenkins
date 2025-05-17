@@ -15,6 +15,9 @@ pipeline {
             emailext(
                 subject: "✅ Éxito en pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Hola Milena,
+				to: "jhonnyarias712@gmail.com"
+				
+				
 
 Tu pipeline se ejecutó correctamente.
 
@@ -29,6 +32,7 @@ URL: ${env.BUILD_URL}
             emailext(
                 subject: "❌ Fallo en pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Hola Milena,
+				to: "jhonnyarias712@gmail.com"
 
 El pipeline ha fallado. Revisa los detalles:
 
