@@ -22,7 +22,7 @@ Job: ${env.JOB_NAME}
 Build: ${env.BUILD_NUMBER}
 URL: ${env.BUILD_URL}
 """,
-                to: "milena.nicole.mariscal@gmail.com"
+                to: "jhonnyarias712@gmail.com"
             )
         }
         failure {
@@ -36,7 +36,7 @@ Job: ${env.JOB_NAME}
 Build: ${env.BUILD_NUMBER}
 URL: ${env.BUILD_URL}
 """,
-                to: "milena.nicole.mariscal@gmail.com"
+                to: "jhonnyarias712@gmail.com"
             )
         }
     }
