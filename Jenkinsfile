@@ -6,10 +6,17 @@ pipeline {
     }
 
     tools {
-        nodejs 'NodeJS 18'  // Asegúrate de tener esta herramienta configurada en Jenkins
+        nodejs 'NodeJS 18'
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                // Clona todo el repositorio en el workspace
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Instalando dependencias...'
@@ -19,27 +26,25 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Ejecutando pruebas...'
+                echo 'Ejecutando pruebas unitarias...'
                 sh 'npm test'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Desplegando en entorno de pruebas...'
-                // Puedes usar Docker, subir a un servidor, etc.
-                // Aquí solo mostramos un mensaje
-                sh 'echo "Despliegue simulado exitoso"'
+                echo 'Desplegando aplicación en entorno de prueba...'
+                sh 'echo "Despliegue simulado completado."'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Pipeline ejecutado correctamente.'
+            echo '✅ Pipeline ejecutado exitosamente.'
         }
         failure {
-            echo '❌ Error durante la ejecución del pipeline.'
+            echo '❌ Error en el pipeline.'
         }
     }
 }
