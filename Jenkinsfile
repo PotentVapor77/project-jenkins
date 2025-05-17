@@ -11,21 +11,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Instalando dependencias con Composer...'
-                sh 'composer install --no-interaction --prefer-dist'
+                bat 'composer install --no-interaction --prefer-dist'  // Usa 'bat' en lugar de 'sh'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Ejecutando pruebas unitarias con PHPUnit...'
-                sh './vendor/bin/phpunit tests' // Ajusta la ruta y carpeta de tests si es necesario
+                bat 'vendor\\bin\\phpunit tests'  // Usa barras invertidas para rutas en Windows
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Desplegando aplicación (simulado)...'
-                sh 'echo "Despliegue completado"'
+                bat 'echo "Despliegue completado"'
             }
         }
     }
