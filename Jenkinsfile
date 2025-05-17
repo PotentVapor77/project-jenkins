@@ -1,34 +1,30 @@
-pipeline {
-    agent any
+post {
+    success {
+        emailext(
+            subject: "✅ Éxito en pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """Hola Milena,
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm  // Descarga el código del repositorio
-            }
-        }
+Tu pipeline se ejecutó correctamente.
 
-        stage('Build') {
-            steps {
-                echo '✅ Etapa de Build (simulada)'  // Mensaje de confirmación
-                bat 'echo "Build completado"'  // Comando de prueba para Windows
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo '🚀 Etapa de Deploy (simulada)'
-                bat 'echo "Despliegue exitoso"'  // Comando de prueba para Windows
-            }
-        }
+Job: ${env.JOB_NAME}
+Build: ${env.BUILD_NUMBER}
+URL: ${env.BUILD_URL}
+""",
+            to: "milena.nicole.mariscal@gmail.com"
+        )
     }
+    failure {
+        emailext(
+            subject: "❌ Fallo en pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """Hola Milena,
 
-    post {
-        success {
-            echo '🎉 Pipeline ejecutado correctamente'
-        }
-        failure {
-            echo '❌ Error en el pipeline'
-        }
+El pipeline ha fallado. Revisa los detalles:
+
+Job: ${env.JOB_NAME}
+Build: ${env.BUILD_NUMBER}
+URL: ${env.BUILD_URL}
+""",
+            to: "milena.nicole.mariscal@gmail.com"
+        )
     }
 }
