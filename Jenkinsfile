@@ -1,40 +1,31 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_ENV = 'development'
-    }
-
-    tools {
-        nodejs 'NodeJS 18'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                // Clona todo el repositorio en el workspace
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Instalando dependencias...'
-                sh 'npm install'
+                echo 'Instalando dependencias con Composer...'
+                sh 'composer install --no-interaction --prefer-dist'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Ejecutando pruebas unitarias...'
-                sh 'npm test'
+                echo 'Ejecutando pruebas unitarias con PHPUnit...'
+                sh './vendor/bin/phpunit tests' // Ajusta la ruta y carpeta de tests si es necesario
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Desplegando aplicación en entorno de prueba...'
-                sh 'echo "Despliegue simulado completado."'
+                echo 'Desplegando aplicación (simulado)...'
+                sh 'echo "Despliegue completado"'
             }
         }
     }
