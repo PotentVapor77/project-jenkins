@@ -1,34 +1,47 @@
 pipeline {
-    agent any
+    agent any  // Ejecuta en cualquier agente disponible
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm  // Descarga el código del repositorio
-            }
-        }
-
         stage('Build') {
             steps {
-                echo '✅ Etapa de Build (simulada)'  // Mensaje de confirmación
-                bat 'echo "Build completado"'  // Comando de prueba para Windows
+                echo 'Ejecutando etapa de Build...'
+                // Ejemplo: sh 'mvn clean package'
             }
         }
-
+        stage('Test') {
+            steps {
+                echo 'Ejecutando pruebas...'
+                // Ejemplo: sh 'mvn test'
+            }
+        }
         stage('Deploy') {
             steps {
-                echo '🚀 Etapa de Deploy (simulada)'
-                bat 'echo "Despliegue exitoso"'  // Comando de prueba para Windows
+                echo 'Desplegando aplicación...'
+                // Ejemplo: sh 'scp target/*.jar user@server:/deploy'
             }
         }
     }
 
     post {
+        always {
+            echo 'Pipeline completado.'
+        }
         success {
-            echo '🎉 Pipeline ejecutado correctamente'
+            echo '¡Pipeline exitoso!'
+            emailext (
+                subject: "✅ Pipeline ${JOB_NAME} #${BUILD_NUMBER} - ÉXITO",
+                body: "La ejecución del pipeline fue exitosa.\nVer detalles: ${BUILD_URL}",
+                to: 'jhonnyarias712@gmail.com'  // Correo actualizado
+            )
         }
         failure {
-            echo '❌ Error en el pipeline'
+            echo 'Pipeline fallido. Revisar logs.'
+            emailext (
+                subject: "❌ Pipeline ${JOB_NAME} #${BUILD_NUMBER} - FALLO",
+                body: "Hubo un error en el pipeline.\nVer detalles: ${BUILD_URL}",
+                to: 'jhonnyarias712@gmail.com'  // Correo actualizado
+            )
         }
     }
+	
 }
