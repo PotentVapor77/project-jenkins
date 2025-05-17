@@ -9,4 +9,4 @@ Proyecto de Gestion
 
 # Datos cambiado / Sánchez
 
-# Datos cambiado / Mariscal  Prueba
+# Datos cambiado / Mariscal
