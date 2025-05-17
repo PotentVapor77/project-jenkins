@@ -5,22 +5,22 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Construyendo proyecto PHP...'
-                // Aquí puedes poner comandos para instalar dependencias, correr pruebas, etc.
+                // Aquí puedes poner comandos batch para instalar dependencias, correr pruebas, etc.
                 // Por ejemplo, si usas Composer:
-                sh 'composer install --no-interaction --prefer-dist'
+                bat 'composer install --no-interaction --prefer-dist'
             }
         }
         stage('Test') {
             steps {
                 echo 'Ejecutando tests PHP...'
                 // Por ejemplo, si usas PHPUnit
-                sh './vendor/bin/phpunit --configuration phpunit.xml'
+                bat '.\\vendor\\bin\\phpunit --configuration phpunit.xml'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Desplegando proyecto PHP...'
-                // Aquí comandos para desplegar tu proyecto, como copiar archivos al servidor, etc.
+                // Aquí comandos batch para desplegar tu proyecto, como copiar archivos al servidor, etc.
             }
         }
     }
