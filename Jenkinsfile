@@ -1,41 +1,46 @@
 pipeline {
-    agent any
+    agent any  // Ejecuta en cualquier agente disponible
 
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                echo 'Obteniendo código del repositorio'
-                checkout scmGit(
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        credentialsId: 'GithubToken',
-                        url: 'https://github.com/PotentVapor77/project-jenkins.git'
-                    ]]
-                )
+                echo 'Ejecutando etapa de Build...'
+                // Ejemplo: sh 'mvn clean package'
             }
         }
-
+        stage('Test') {
+            steps {
+                echo 'Ejecutando pruebas...'
+                // Ejemplo: sh 'mvn test'
+            }
+        }
         stage('Deploy') {
             steps {
-                echo 'Desplegando aplicación PHP'
-                
+                echo 'Desplegando aplicación...'
+                // Ejemplo: sh 'scp target/*.jar user@server:/deploy'
             }
         }
     }
 
-	post {
-			success {
-				emailext(
-					subject: "✅ Build exitoso: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-					body: "El build ${env.JOB_NAME} #${env.BUILD_NUMBER} finalizó correctamente.\nRevisa: ${env.BUILD_URL}",
-					to: 'jhonnyarias712@gmail.com'
-				)
-			}
-			failure {
-				emailext(
-					subject: "❌ Build fallido: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-					body: "El build ${env.JOB_NAME} #${env.BUILD_NUMBER} falló.\nRevisa: ${env.BUILD_URL}",
-					to: 'jhonnyarias712@gmail.com'
-				)
-			}
-		}
+    post {
+        always {
+            echo 'Pipeline completado.'
+        }
+        success {
+            echo '¡Pipeline exitoso!'
+            emailext (
+                subject: "✅ Pipeline ${JOB_NAME} #${BUILD_NUMBER} - ÉXITO",
+                body: "La ejecución del pipeline fue exitosa.\nVer detalles: ${BUILD_URL}",
+                to: 'jhonnyarias712@gmail.com'  // Correo actualizado
+            )
+        }
+        failure {
+            echo 'Pipeline fallido. Revisar logs.'
+            emailext (
+                subject: "❌ Pipeline ${JOB_NAME} #${BUILD_NUMBER} - FALLO",
+                body: "Hubo un error en el pipeline.\nVer detalles: ${BUILD_URL}",
+                to: 'jhonnyarias712@gmail.com'  // Correo actualizado
+            )
+        }
+    }
+}
