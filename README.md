@@ -1,7 +1,7 @@
 # project-jenkins
 Proyecto de Gestion
 
-# Datos cambiados / Pilco
+# Datos cambiados / Pilco Luis
 
 # Datos cambiado / Zhunio R Gia
 
